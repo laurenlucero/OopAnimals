@@ -21,7 +21,7 @@ describe("Animal Class", () => {
 
   test("Animal should have a default speak method", () => {
     const animal = new Animal("Generic");
-    expect(animal.speak()).toBeUndefined();
+    expect(animal.speak()).toBe('Generic says "ILY" 🤟');
   });
 
   test("Animal should have a default eat method", () => {

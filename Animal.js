@@ -13,6 +13,7 @@ class Animal {
 
   speak() {
     // To be overridden by subclasses
+    return `${this.name} says "ILY" 🤟`;
   }
 
   eat() {
