@@ -17,7 +17,7 @@ class Animal {
   eat() {
     return `${this.type}s enjoy eating ${this.favoriteFood}`;
   }
-
+  // TODO: Add unit tests for saving and loading
   // Save animal data to a JSON file
   static saveAll(animals) {
     const animalData = animals.map(({ name, type, favoriteFood }) => ({
