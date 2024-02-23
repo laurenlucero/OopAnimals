@@ -5,12 +5,18 @@ const AnimalCLI = require("./AnimalCLI");
 
 class Animal {
   // Base class representing an animal with a name.
-  constructor(name) {
+  constructor(name, type, favoriteFood = "treats") {
     this.name = name;
+    this.type = type;
+    this.favoriteFood = favoriteFood;
   }
 
   speak() {
     // To be overridden by subclasses
+  }
+
+  eat() {
+    return `${this.type}s enjoy eating ${this.favoriteFood}`;
   }
 }
 
@@ -39,6 +45,7 @@ class Unicorn extends Animal {
 }
 
 const animalTypes = {
+  animal: Animal,
   cat: Cat,
   dog: Dog,
   cow: Cow,
@@ -54,11 +61,12 @@ const handleUnknownAnimal = (name, type) => {
 const commandLineInput = AnimalCLI.processCommandLineInput();
 
 if (commandLineInput) {
-  const { name, type } = commandLineInput;
+  const { name, type, favoriteFood } = commandLineInput;
 
   if (animalTypes[type]) {
-    const animal = new animalTypes[type](name);
+    const animal = new animalTypes[type](name, type, favoriteFood);
     console.log(animal.speak());
+    console.log(animal.eat());
   } else {
     console.log(handleUnknownAnimal(name, type));
   }

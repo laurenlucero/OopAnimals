@@ -8,9 +8,25 @@ const {
 } = require("../Animal");
 
 describe("Animal Class", () => {
+  jest.spyOn(require("../AnimalCLI"), "processCommandLineInput");
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    require("../AnimalCLI").processCommandLineInput.mockReturnValue({
+      name: "Generic",
+      type: "animal",
+      favoriteFood: "treats",
+    });
+  });
+
   test("Animal should have a default speak method", () => {
     const animal = new Animal("Generic");
     expect(animal.speak()).toBeUndefined();
+  });
+
+  test("Animal should have a default eat method", () => {
+    const animal = new Animal("Generic", "animal");
+    expect(animal.eat()).toBe("animals enjoy eating treats");
   });
 
   test('Cat should speak "Meow"', () => {
@@ -34,13 +50,22 @@ describe("Animal Class", () => {
       "Unicorns are too fabulous for labels and words ✨🦄✨"
     );
   });
+  test("Default favorite food should be treats", () => {
+    const animal = new Animal("Generic", "animal");
+    expect(animal.eat()).toBe("animals enjoy eating treats");
+  });
+
+  test("Favorite food argument should override default", () => {
+    const animal = new Animal("Generic", "animal", "snacks");
+    expect(animal.eat()).toBe("animals enjoy eating snacks");
+  });
 });
 
 describe("handleUnknownAnimal Function", () => {
   test("Unknown animal type should return appropriate message", () => {
     const message = handleUnknownAnimal("Fluffy", "dragon");
     const expected =
-      "Fluffy the dragon is an unknown animal. Valid types are: cat, dog, cow, unicorn";
+      "Fluffy the dragon is an unknown animal. Valid types are: animal, cat, dog, cow, unicorn";
     expect(message).toBe(expected);
   });
 });
