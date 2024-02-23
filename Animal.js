@@ -1,3 +1,5 @@
+const AnimalCLI = require("./AnimalCLI");
+
 // A simple Node CLI script to create animals that speak.
 // Usage: node Animal.js [name] [type]
 
@@ -49,16 +51,17 @@ const handleUnknownAnimal = (name, type) => {
 };
 
 // Command line input processing
-const [name, type] = process.argv.slice(2);
+const commandLineInput = AnimalCLI.processCommandLineInput();
 
-if (!name || !type) {
-  console.log("Please provide both name and type of the animal");
-  process.exit(1);
+if (commandLineInput) {
+  const { name, type } = commandLineInput;
+
+  if (animalTypes[type]) {
+    const animal = new animalTypes[type](name);
+    console.log(animal.speak());
+  } else {
+    console.log(handleUnknownAnimal(name, type));
+  }
 }
 
-if (animalTypes[type]) {
-  const animal = new animalTypes[type](name);
-  console.log(animal.speak());
-} else {
-  console.log(handleUnknownAnimal(name, type));
-}
+module.exports = { Animal, Cat, Dog, Cow, Unicorn, handleUnknownAnimal };
